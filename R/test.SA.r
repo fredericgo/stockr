@@ -1,4 +1,4 @@
-if(!exists("StockAnalyzer", mode="function")) source("stockAnalyzer.R")
+#if(!exists("StockAnalyzer", mode="function")) source("stockAnalyzer.R")
 
 st <- StockTable("data/fred.csv")
 

@@ -7,3 +7,4 @@ Authors@R: person("Frederic", "Go", email = "fredericstgo@gmail.com", role = c("
 Description: This package is for those who are too busty handling with their stocks
 License: What license is it under?
 LazyData: TRUE
+Suggests: testthat
