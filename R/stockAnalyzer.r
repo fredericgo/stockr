@@ -1,31 +1,28 @@
 #require()
+#' StockAnalyzer
+#'
+#' The main controller for stockr package.
+#' It automatically download historical OHLC data from a specific CSV file,
+#' and calculate the performance of the portfolio.
 
-setClass("StockTable",
+#' @include StockTable.R
+#' @include StockDownloader.R
+setClass("StockAnalyzer",
          representation = representation(
            filename="character",
-           data="data.frame"
+           table="StockTable",
+           downloader="StockDownloader"
          )
 )
 
-StockTable <- function(fn) {
-  s <- new("StockTable", filename=fn)
-  print(s)
+#' Constructor for StockAnalyzer
+StockAnalyzer <- function() {
+  s <- new("StockAnalyzer")
   s
 }
 
-setGeneric("setData<-", function(object,value) {standardGeneric("setData<-")})
-
-setReplaceMethod(f="setData",
-          signature="StockTable",
-          definition=function(object, value) {
-            #data <- read.csv(x@filename, row.names=NULL)
-            object@data <- value
-            return(object)
-          }
-)
-
 setMethod(f="initialize",
-          signature="StockTable",
+          signature="StockAnalyzer",
           definition=function(.Object, filename) {
             cat("~~~ StockTable: initialize ~~~\n")
             .Object@filename <- filename
@@ -35,10 +32,18 @@ setMethod(f="initialize",
           }
 )
 
-.filterData <- function(df) {
-  fields <- c("市場別", "代號", "商品名稱", "數量")
-  df <- df[,fields]
-  names(df) <- c("market", "no", "name", "qty")
-  df
-}
+setGeneric("analyse",
+           function(x) {standardGeneric("analyse")})
+
+setMethod(f="analyse",
+          signature("StockAnalyzer"),
+          definition=function(x) {
+            cat("~~~ StockAnalyzer: analyze ~~~\n")
+            # 上市下載
+            market.stks <- subset(x@data, "上市")
+          }
+)
+
+
+
 
