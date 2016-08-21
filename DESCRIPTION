@@ -1,0 +1,9 @@
+Package: stockr
+Type: Package
+Title: Analyse my stocks (Title Case)
+Version: 0.1
+Date: 2016-08-21
+Authors@R: person("Frederic", "Go", email = "fredericstgo@gmail.com", role = c("aut", "cre"))
+Description: This package is for those who are too busty handling with their stocks
+License: What license is it under?
+LazyData: TRUE
