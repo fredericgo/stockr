@@ -8,6 +8,7 @@ Description: This package is for those who are too busty handling with their
     stocks
 License: What license is it under?
 LazyData: TRUE
+<<<<<<< HEAD
 Imports:
     Quandl,lubridate,quantmod
 Suggests:
@@ -20,3 +21,7 @@ Collate:
     'hello.R'
     'trajectories.r'
 RoxygenNote: 5.0.1
+=======
+Imports: Quandl,lubridate, quantmod
+Suggests: testthat
+>>>>>>> d00df105152c067addc298476a0ca4b8c4bae37f

@@ -9,10 +9,6 @@ setClass("StockDownloader",
          )
 )
 
-StockDownloader <- function(stock.list) {
-  new("StockDownloader", stock.list)
-}
-
 setMethod(f="initialize",
           signature="StockDownloader",
           definition=function(.Object, stock.list, years=1) {
@@ -31,7 +27,6 @@ setMethod(f="download_historical",
           signature("StockDownloader"),
           definition=function(x) {
             cat("~~~ StockDownloader: download ~~~\n")
-
             m1Data <- new.env()
             m2Data <- new.env()
             output <- list()

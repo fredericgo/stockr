@@ -44,6 +44,3 @@ setMethod(f="analyse",
           }
 )
 
-
-
-
