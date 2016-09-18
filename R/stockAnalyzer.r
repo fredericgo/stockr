@@ -11,13 +11,14 @@ setClass("StockAnalyzer",
          representation = representation(
            filename="character",
            table="StockTable",
-           downloader="StockDownloader"
+           downloader="StockDownloader",
+           ts="xts"
          )
 )
 
 #' Constructor for StockAnalyzer
-StockAnalyzer <- function() {
-  s <- new("StockAnalyzer")
+StockAnalyzer <- function(filename) {
+  s <- new("StockAnalyzer", filename)
   s
 }
 
@@ -26,7 +27,9 @@ setMethod(f="initialize",
           definition=function(.Object, filename) {
             cat("~~~ StockTable: initialize ~~~\n")
             .Object@filename <- filename
-            .Object@data <- .filterData(read.csv(.Object@filename))
+            .Object@table <- StockTable(filename)
+            .Object@downloader <- StockDownloader(.Object@table)
+            .Object@ts <- download_historical(.Object@downloader)
             validObject(.Object)
             return(.Object)
           }
@@ -39,8 +42,10 @@ setMethod(f="analyse",
           signature("StockAnalyzer"),
           definition=function(x) {
             cat("~~~ StockAnalyzer: analyze ~~~\n")
-            # 上市下載
-            market.stks <- subset(x@data, "上市")
+            # calculate
+            ts <- Return.calculate(x@ts)
+            #ts <- na.omit(ts)
+            chart.RiskReturnScatter(ts)
           }
 )
 

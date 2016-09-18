@@ -13,10 +13,10 @@ Imports:
 Suggests:
     testthat
 Collate:
-    'StockDownloader.R'
     'StockTable.R'
-    'StockAnalyzer.R'
+    'StockDownloader.R'
     'brob.R'
     'hello.R'
+    'stockAnalyzer.r'
     'trajectories.r'
 RoxygenNote: 5.0.1

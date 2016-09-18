@@ -2,17 +2,22 @@
 
 #devtools::use_package("quantmod")
 
+#' @include StockTable.R
 setClass("StockDownloader",
          representation = representation(
-           stock.list="data.frame",
+           stock.list="StockTable",
            duration="numeric"
          )
 )
 
+StockDownloader <- function(stbl) {
+  new("StockDownloader", stock.list=stbl)
+}
+
 setMethod(f="initialize",
           signature="StockDownloader",
           definition=function(.Object, stock.list, years=1) {
-            cat("~~~ StockTable: initialize ~~~\n")
+            cat("~~~ StockDownloader: initialize ~~~\n")
             .Object@stock.list <- stock.list
             .Object@duration <- years
             validObject(.Object)
@@ -32,23 +37,24 @@ setMethod(f="download_historical",
             output <- list()
             endDate <- Sys.Date()
             startDate <- endDate - dyears(1)
+            data <- x@stock.list@data
 
             # 上市下載
-            market.stks <- subset(x@stock.list, market == "上市")
-            tickers <- paste0(market.stks[["no"]], ".tw")[1:3]
+            market.stks <- subset(data, market == "上市")
+            tickers <- paste0(market.stks[["no"]], ".tw")
             quantmod::getSymbols(tickers, env = m1Data,
                        src = "yahoo", from = startDate, to = endDate)
             d1 <- do.call(cbind, eapply(m1Data, quantmod::Ad))
 
-            otc.stks <- subset(x@stock.list, market == "上櫃")
-            tickers <- paste0(otc.stks[["no"]], ".two")[1:3]
+            otc.stks <- subset(data, market == "上櫃")
+            tickers <- paste0(otc.stks[["no"]], ".two")
             quantmod::getSymbols(tickers, env = m2Data,
                                  src = "yahoo", from = startDate, to = endDate)
             d2 <- do.call(cbind, eapply(m2Data, quantmod::Ad))
 
             output <- cbind(d1,d2)
-            s <- strsplit(names(df), "[X.]")
-            names(output) <- sapply(s, function(x){paste(x[4],x[2], x[3], sep=".")})
+            s <- strsplit(names(output), "[X.]")
+            names(output) <- sapply(s, function(x){paste(x[2], x[3], sep=".")})
             output
           }
 )
