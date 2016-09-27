@@ -5,6 +5,8 @@
 #' It automatically download historical OHLC data from a specific CSV file,
 #' and calculate the performance of the portfolio.
 
+setOldClass("xts")
+
 #' @include StockTable.R
 #' @include StockDownloader.R
 setClass("StockAnalyzer",
@@ -43,9 +45,9 @@ setMethod(f="analyse",
           definition=function(x) {
             cat("~~~ StockAnalyzer: analyze ~~~\n")
             # calculate
-            ts <- Return.calculate(x@ts)
+            ts <- PerformanceAnalytics::Return.calculate(x@ts)
             #ts <- na.omit(ts)
-            chart.RiskReturnScatter(ts)
+            PerformanceAnalytics::chart.RiskReturnScatter(ts)
           }
 )
 

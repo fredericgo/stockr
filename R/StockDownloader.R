@@ -1,6 +1,8 @@
 #require()
 
 #devtools::use_package("quantmod")
+m1.cache <- new.env()
+m2.cache <- new.env()
 
 #' @include StockTable.R
 setClass("StockDownloader",
@@ -9,6 +11,10 @@ setClass("StockDownloader",
            duration="numeric"
          )
 )
+
+check.cache <- function() {
+
+}
 
 StockDownloader <- function(stbl) {
   new("StockDownloader", stock.list=stbl)
@@ -32,25 +38,31 @@ setMethod(f="download_historical",
           signature("StockDownloader"),
           definition=function(x) {
             cat("~~~ StockDownloader: download ~~~\n")
-            m1Data <- new.env()
-            m2Data <- new.env()
+            # check cache
+
             output <- list()
             endDate <- Sys.Date()
-            startDate <- endDate - dyears(1)
+            startDate <- endDate - lubridate::dyears(1)
             data <- x@stock.list@data
 
             # 上市下載
             market.stks <- subset(data, market == "上市")
             tickers <- paste0(market.stks[["no"]], ".tw")
-            quantmod::getSymbols(tickers, env = m1Data,
-                       src = "yahoo", from = startDate, to = endDate)
-            d1 <- do.call(cbind, eapply(m1Data, quantmod::Ad))
+            if (!length(ls(envir=m1.cache))){
+              quantmod::getSymbols(tickers, env = m1.cache,
+                                   src = "yahoo", from = startDate, to = endDate)
+            }
+
+            d1 <- do.call(cbind, eapply(m1.cache, quantmod::Ad))
 
             otc.stks <- subset(data, market == "上櫃")
             tickers <- paste0(otc.stks[["no"]], ".two")
-            quantmod::getSymbols(tickers, env = m2Data,
-                                 src = "yahoo", from = startDate, to = endDate)
-            d2 <- do.call(cbind, eapply(m2Data, quantmod::Ad))
+            if (!length(ls(envir=m2.cache))){
+              quantmod::getSymbols(tickers, env = m2.cache,
+                                   src = "yahoo", from = startDate, to = endDate)
+            }
+
+            d2 <- do.call(cbind, eapply(m2.cache, quantmod::Ad))
 
             output <- cbind(d1,d2)
             s <- strsplit(names(output), "[X.]")

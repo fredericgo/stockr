@@ -37,6 +37,7 @@ setMethod(f="initialize",
   fields <- c("市場別", "代號", "商品名稱", "數量")
   df <- df[,fields]
   names(df) <- c("market", "no", "name", "qty")
+  df <- subset(df, df$market != "")
   df
 }
 

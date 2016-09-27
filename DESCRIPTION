@@ -9,7 +9,7 @@ Description: This package is for those who are too busty handling with their
 License: What license is it under?
 LazyData: TRUE
 Imports:
-    Quandl,lubridate,quantmod
+    Quandl,lubridate,quantmod, xts,PerformanceAnalytics
 Suggests:
     testthat
 Collate:
