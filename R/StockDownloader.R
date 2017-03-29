@@ -16,13 +16,13 @@ check.cache <- function() {
 
 }
 
-StockDownloader <- function(stbl) {
-  new("StockDownloader", stock.list=stbl)
+StockDownloader <- function(stbl, ...) {
+  new("StockDownloader", stock.list=stbl, ...)
 }
 
 setMethod(f="initialize",
           signature="StockDownloader",
-          definition=function(.Object, stock.list, years=1) {
+          definition=function(.Object, stock.list, years=3) {
             cat("~~~ StockDownloader: initialize ~~~\n")
             .Object@stock.list <- stock.list
             .Object@duration <- years

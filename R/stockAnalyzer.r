@@ -30,7 +30,7 @@ setMethod(f="initialize",
             cat("~~~ StockTable: initialize ~~~\n")
             .Object@filename <- filename
             .Object@table <- StockTable(filename)
-            .Object@downloader <- StockDownloader(.Object@table)
+            .Object@downloader <- StockDownloader(.Object@table, years=3)
             .Object@ts <- download_historical(.Object@downloader)
             validObject(.Object)
             return(.Object)

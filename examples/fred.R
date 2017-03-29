@@ -1,6 +1,8 @@
+library(stockr)
 mystock.file <- system.file("extdata", "fred.csv", package = "stockr")
 
 st <- StockTable(mystock.file)
+
 sd <- StockDownloader(st)
 d <- download_historical(sd)
 sa <- StockAnalyzer(mystock.file)

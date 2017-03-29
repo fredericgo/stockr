@@ -1,0 +1,30 @@
+---
+title: "My stocks"
+author: "Frederic Go"
+date: "October 2, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+Read my portfolio table.
+
+```{r cars}
+library(stockr)
+mystock.file <- system.file("extdata", "fred.csv", package = "stockr")
+st <- stockr::StockTable(mystock.file)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
