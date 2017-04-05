@@ -1,5 +1,5 @@
 library(stockr)
-mystock.file <- system.file("extdata", "fred.csv", package = "stockr")
+mystock.file <- system.file("~/Desktop/", "fred.csv")
 
 st <- StockTable(mystock.file)
 

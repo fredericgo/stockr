@@ -27,7 +27,7 @@ setMethod(f="initialize",
           definition=function(.Object, filename) {
             cat("~~~ StockTable: initialize ~~~\n")
             .Object@filename <- filename
-            .Object@data <- .filterData(read.csv(.Object@filename))
+            .Object@data <- .filterData(read.csv(.Object@filename, row.names=NULL))
             validObject(.Object)
             return(.Object)
           }
